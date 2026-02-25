@@ -5,6 +5,7 @@ import com.sena.entity.Producto;
 import com.sena.mapper.ProductoMapper;
 import com.sena.repository.ProductoRepository;
 import com.sena.service.ProductoService;
+import com.sena.validator.ProductoValidator;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
@@ -19,9 +20,9 @@ public class ProductoServiceImplementation implements ProductoService {
 
 
     private final ProductoRepository repository;
-
     private final ProductoMapper mapper;
-    public ProductoServiceImplementation(ProductoRepository repository, ProductoMapper mapper){
+
+    public ProductoServiceImplementation(ProductoRepository repository,  ProductoMapper mapper){
         this.repository = repository;
         this.mapper = mapper;
     }
@@ -32,7 +33,7 @@ public class ProductoServiceImplementation implements ProductoService {
         Page<Producto> productos;
         if (search == null || search.trim().isEmpty()){
             productos = repository.findAll(pageable);
-        }else {
+        }else{
             productos = repository.findByNombreContainingIgnoreCase(pageable, search);
         }
         return new PageImpl<>(
@@ -53,6 +54,7 @@ public class ProductoServiceImplementation implements ProductoService {
 
     @Override
     public ProductoDTO create(ProductoDTO obj) {
+        ProductoValidator.save(obj);
         Producto entidad = mapper.toEntity(obj);
         Producto saved = repository.save(entidad);
         return mapper.toDTO(saved);
@@ -60,6 +62,7 @@ public class ProductoServiceImplementation implements ProductoService {
 
     @Override
     public ProductoDTO update(Long id, ProductoDTO obj) {
+        ProductoValidator.save(obj);
         Producto entidad = mapper.toEntity(obj);
         if (repository.existsById(id)){
             entidad.setId(id);

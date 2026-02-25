@@ -9,16 +9,18 @@ public class ProductoMapper extends GenericMapper<Producto, ProductoDTO>{
 
     @Override
     public ProductoDTO toDTO(Producto entity) {
-        if(entity == null ){
+        if(entity == null){
             return null;
         }
+
         return ProductoDTO.builder()
                 .id(entity.getId())
                 .codigo(entity.getCodigo())
                 .nombre(entity.getNombre())
                 .precioUnitario(entity.getPrecioUnitario())
                 .unidadId(entity.getUnidadId())
-                .unidadNombre(entity.getUnidadId() != null ? entity.getUnidad().getDescripcion():null).build();
+                .unidadNombre(entity.getUnidad() != null? entity.getUnidad().getDescripcion():null)
+                .build();
     }
 
     @Override
@@ -26,6 +28,7 @@ public class ProductoMapper extends GenericMapper<Producto, ProductoDTO>{
         if (dto == null){
             return null;
         }
+
         return Producto.builder()
                 .id(dto.getId())
                 .codigo(dto.getCodigo())

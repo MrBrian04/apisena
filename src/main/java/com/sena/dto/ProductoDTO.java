@@ -19,6 +19,4 @@ public class ProductoDTO {
     private String nombre;
     private BigDecimal precioUnitario;
 
-
-
 }

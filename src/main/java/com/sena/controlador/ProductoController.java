@@ -1,5 +1,6 @@
 package com.sena.controlador;
 
+import com.sena.dto.ApiResponse;
 import com.sena.dto.ProductoDTO;
 import com.sena.entity.Producto;
 import com.sena.service.ProductoService;
@@ -22,35 +23,42 @@ public class ProductoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductoDTO>> findAll(
+    public ResponseEntity<ApiResponse<Page<ProductoDTO>>> findAll(
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "offset", required = false, defaultValue = "0") int pageNumber,
             @RequestParam(value = "limit", required = false, defaultValue = "5") int pageSize
             ){
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<ProductoDTO> page = service.findAll(pageable, search);
-        return ResponseEntity.ok(page);
+        return new ApiResponse<>(page, true, "success")
+                .createResponse(HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductoDTO> findById(@PathVariable Long id){
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<ApiResponse<ProductoDTO>> findById(@PathVariable Long id){
+        ProductoDTO dto = service.findById(id);
+
+        return new ApiResponse<>(dto, true, "success")
+                .createResponse(HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ProductoDTO> create(@Valid @RequestBody ProductoDTO obj){
-        return new ResponseEntity<>(service.create(obj), HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse<ProductoDTO>> create(@Valid @RequestBody ProductoDTO obj){
+        ProductoDTO created = service.create(obj);
+        return new ApiResponse<>(created, true, "success")
+                .createResponse(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductoDTO> update(@PathVariable Long id, @Valid @RequestBody ProductoDTO obj){
-        return ResponseEntity.ok(service.update(id, obj));
+    public ResponseEntity<ApiResponse<ProductoDTO>> update(@PathVariable Long id, @Valid @RequestBody ProductoDTO obj){
+        ProductoDTO edited = service.update(id, obj);
+        return new ApiResponse<>(edited, true, "success")
+                .createResponse(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.noContent().build();
+        return new ApiResponse<Void>(null, true, "success").createResponse(HttpStatus.OK);
     }
-
 }
