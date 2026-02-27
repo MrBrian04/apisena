@@ -5,7 +5,9 @@ import com.sena.dto.ProductoDTO;
 import com.sena.entity.Cliente;
 import com.sena.entity.Producto;
 import com.sena.entity.TipoDocumento;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ClienteMapper extends GenericMapper<Cliente, ClienteDTO>{
 
     @Override

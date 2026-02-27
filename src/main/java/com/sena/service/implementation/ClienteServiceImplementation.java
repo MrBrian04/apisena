@@ -2,6 +2,7 @@ package com.sena.service.implementation;
 
 import com.sena.dto.ClienteDTO;
 import com.sena.entity.Cliente;
+import com.sena.exception.NoDataFoundException;
 import com.sena.mapper.ClienteMapper;
 import com.sena.repository.ClienteRepository;
 import com.sena.service.ClienteService;
