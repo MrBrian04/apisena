@@ -5,10 +5,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
 @Setter
+@Getter
 public class ClienteDTO {
-
     private Long id;
     private String nombre;
     private String tipoDocumento;
@@ -16,6 +15,4 @@ public class ClienteDTO {
     private String direccion;
     private String telefono;
     private String email;
-
-
 }

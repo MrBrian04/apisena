@@ -6,8 +6,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class UsuarioDTO {
     private Integer id;
@@ -15,4 +15,8 @@ public class UsuarioDTO {
     private String password;
     private boolean activo;
     private List<RolDTO> roles;
+
+    public boolean isActivo(){
+        return activo;
+    }
 }

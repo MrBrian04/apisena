@@ -4,13 +4,16 @@ import com.sena.dto.AuthResponseDTO;
 import com.sena.dto.LoginRequestDTO;
 import com.sena.entity.Usuario;
 import com.sena.exception.NoDataFoundException;
+import com.sena.repository.RolRepository;
 import com.sena.repository.UsuarioRepository;
+import com.sena.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import security.JwtService;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class AuthService {
     private final UsuarioRepository usuarioRepository;

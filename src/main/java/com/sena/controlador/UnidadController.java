@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated")
 @RequestMapping("api/unidades")
 public class UnidadController {
 

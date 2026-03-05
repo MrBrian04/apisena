@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/usuarios")
 public class UsuarioController {
-
     private final UsuarioService service;
 
     public UsuarioController(UsuarioService service){
@@ -41,7 +40,6 @@ public class UsuarioController {
         return new ApiResponse<>(dto, true, "success").createResponse(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ApiResponse<UsuarioDTO>> create(@Valid @RequestBody UsuarioDTO obj){
         UsuarioDTO created=service.create(obj);

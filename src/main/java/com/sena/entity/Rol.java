@@ -1,15 +1,14 @@
 package com.sena.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @Builder
 @Getter
-@Setter
-@Entity
 @Table(name = "roles")
 public class Rol {
     @Id

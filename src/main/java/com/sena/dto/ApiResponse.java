@@ -2,10 +2,13 @@ package com.sena.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-@Data
+@Getter
+@Setter
 @Builder
 public class ApiResponse<T> {
     private T data;

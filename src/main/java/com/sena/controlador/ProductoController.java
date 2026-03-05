@@ -14,7 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+@PreAuthorize("hasAnyRole('USER','ADMIN')")
 @RequestMapping("api/productos")
 public class ProductoController {
 
@@ -24,6 +24,7 @@ public class ProductoController {
         this.service = service;
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping
     public ResponseEntity<ApiResponse<Page<ProductoDTO>>> findAll(
             @RequestParam(value = "search", required = false) String search,

@@ -1,7 +1,14 @@
 package com.sena.controlador;
 
+import com.sena.dto.ApiResponse;
+import com.sena.dto.AuthResponseDTO;
+import com.sena.dto.LoginRequestDTO;
 import com.sena.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,4 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<AuthResponseDTO>> login(@RequestBody LoginRequestDTO request) {
+        return new ApiResponse<>(authService.login(request),true,"success").createResponse(HttpStatus.OK);
+    }
 }

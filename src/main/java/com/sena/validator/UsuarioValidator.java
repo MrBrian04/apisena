@@ -14,5 +14,8 @@ public class UsuarioValidator {
         if (registro.getRoles() == null) {
             throw new ValidateException("Es requerido un ROL");
         }
+//        if(registro.getActivo()==null){
+//            throw new ValidateException("El campo activo es requerido");
+//        }
     }
 }

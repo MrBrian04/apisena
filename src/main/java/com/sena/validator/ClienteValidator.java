@@ -1,19 +1,19 @@
 package com.sena.validator;
 
 import com.sena.dto.ClienteDTO;
+import com.sena.exception.ValidateException;
+
 
 public class ClienteValidator {
-
-    public static void save(ClienteDTO registro){
-        if(registro.getNombre() == null || registro.getNombre().trim().isEmpty()){
-            throw new IllegalArgumentException("El nombre del cliente es requerido");
+    public static void save(ClienteDTO registro) {
+        if (registro.getNombre() == null || registro.getNombre().trim().isEmpty()) {
+            throw new ValidateException("El nombre del cliente es requerido");
         }
-        if(registro.getNumeroDocumento() == null || registro.getNumeroDocumento().trim().isEmpty()){
-            throw new IllegalArgumentException("El numero de documento es requerido");
+        if (registro.getNumeroDocumento() == null || registro.getNumeroDocumento().trim().isEmpty()) {
+            throw new ValidateException("El número de documento es requerido");
         }
-        if (registro.getTipoDocumento()==null){
-            throw new IllegalArgumentException("El tipo de docuemnto es requerido.");
+        if (registro.getTipoDocumento() == null) {
+            throw new ValidateException("El tipo de documento es requerido");
         }
-
     }
 }

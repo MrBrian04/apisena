@@ -6,23 +6,19 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.rmi.dgc.Lease;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Entity
 @Getter
 @Setter
-@Entity
-@Table(name = "usaurios")
+@Table(name = "usuarios")
 public class Usuario implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -70,4 +66,5 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return activo;
     }
+
 }

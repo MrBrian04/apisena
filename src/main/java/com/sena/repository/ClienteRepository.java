@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-
     Cliente findByNumeroDocumento(String numeroDocumento);
     Page<Cliente> findByNombreContainingIgnoreCase(Pageable pageable, String nombre);
-
 }

@@ -12,8 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class UsuarioMapper extends GenericMapper<Usuario, UsuarioDTO>{
-
+public class UsuarioMapper extends GenericMapper<Usuario, UsuarioDTO>  {
     @Override
     public UsuarioDTO toDTO(Usuario entity) {
         if(entity==null) return null;

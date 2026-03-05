@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class ClienteServiceImplementation implements ClienteService {
-
     private final ClienteRepository repository;
     private final ClienteMapper mapper;
 
@@ -29,7 +28,6 @@ public class ClienteServiceImplementation implements ClienteService {
     @Transactional(readOnly = true)
     public Page<ClienteDTO> findAll(Pageable pageable, String search) {
         Page<Cliente> clientes;
-        //Alt+ 124
         if(search==null || search.trim().isEmpty()){
             clientes= repository.findAll(pageable);
         }else{
@@ -78,5 +76,4 @@ public class ClienteServiceImplementation implements ClienteService {
                 ()->new NoDataFoundException("No existe un registro con ese ID."));
         repository.delete(entidad);
     }
-
 }

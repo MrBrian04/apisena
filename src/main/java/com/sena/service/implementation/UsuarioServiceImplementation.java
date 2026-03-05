@@ -8,9 +8,11 @@ import com.sena.mapper.UsuarioMapper;
 import com.sena.repository.UsuarioRepository;
 import com.sena.service.UsuarioService;
 import com.sena.validator.UsuarioValidator;
+import io.jsonwebtoken.security.Password;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,16 +23,18 @@ import java.util.stream.Collectors;
 public class UsuarioServiceImplementation implements UsuarioService {
     private final UsuarioRepository repository;
     private final UsuarioMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioServiceImplementation(UsuarioRepository repository, UsuarioMapper mapper){
+    public UsuarioServiceImplementation(UsuarioRepository repository, UsuarioMapper mapper, PasswordEncoder passwordEncoder){
         this.repository=repository;
         this.mapper=mapper;
+        this.passwordEncoder=passwordEncoder;
     }
-
     @Override
     @Transactional(readOnly = true)
     public Page<UsuarioDTO> findAll(Pageable pageable, String search) {
         Page<Usuario> usuarios;
+        //Alt+ 124
         if(search==null || search.trim().isEmpty()){
             usuarios= repository.findAll(pageable);
         }else{
@@ -54,26 +58,39 @@ public class UsuarioServiceImplementation implements UsuarioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UsuarioDTO create(UsuarioDTO obj) {
         UsuarioValidator.save(obj);
+
         if (repository.findByEmail(obj.getEmail()).isPresent())          {
             throw new ValidateException("El email ya está registrado");
         }
-        Usuario entidad=mapper.toEntity(obj);
-        Usuario saved=repository.save(entidad);
+        Usuario usuario=mapper.toEntity(obj);
+        usuario.setPassword(passwordEncoder.encode(obj.getPassword()));
+        Usuario saved=repository.save(usuario);
         return mapper.toDTO(saved);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UsuarioDTO update(Integer id, UsuarioDTO obj) {
         UsuarioValidator.save(obj);
-        Usuario entidad=mapper.toEntity(obj);
-        if(repository.existsById(id)){
-            entidad.setId(id);
-            Usuario saved=repository.save(entidad);
-            return mapper.toDTO(saved);
+        Usuario usuarioActual = repository.findById(id)
+                .orElseThrow(() -> new NoDataFoundException("No existe un registro con ese ID"));
+
+        Usuario entidad = mapper.toEntity(obj);
+
+        // Actualizar campos directamente en la entidad existente
+        usuarioActual.setEmail(entidad.getEmail());
+        usuarioActual.setActivo(entidad.isActivo());
+        usuarioActual.setRoles(entidad.getRoles());
+
+        if (obj.getPassword() != null && !obj.getPassword().isEmpty()) {
+            usuarioActual.setPassword(passwordEncoder.encode(obj.getPassword()));
         }
-        return null;
+
+        Usuario saved = repository.save(usuarioActual);
+        return mapper.toDTO(saved);
     }
 
     @Override
